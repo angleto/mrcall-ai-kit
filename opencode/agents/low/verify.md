@@ -52,6 +52,14 @@ source and judge.
   make the task pass. Kit maintenance requires a separate explicit kit task.
 - **Never claim success you did not verify** — quote the command and its real
   output.
+- **Verification warnings are advisory.** When the scoped handoff names an
+  existing completion task, run the installed verification-warnings `check`
+  with that exact repository/task before reporting its required checks as
+  verified, if the optional helper is installed. Reuse actual execution
+  receipts; do not initialize a new task for a read-only role or interpret
+  warnings as permission or session denial. Bind optional runtime notifications
+  only when the actual runtime/session ID is available; never guess it or use
+  the lead context token. Missing helper or binding stays an explicit limit.
 - **Test in the real environment** — run the actual command, the way the final
   user runs it. A unit test passing is not the same claim.
 - **Read full files.** Do not truncate, do not cap search results.

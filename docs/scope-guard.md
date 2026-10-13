@@ -2,9 +2,9 @@
 
 This document defines the inline scope declaration introduced by documentation
 harness v4, its current v9 ownership model, and the contract for optional runtime
-enforcement. Implementation is in progress. No runtime adapter is considered
-working until it passes the installed-client acceptance flow described in the
-execution plan.
+enforcement. The implementation is delivered with explicit operator acceptance
+of the remaining verification gap. That acceptance does not prove unrun runtime
+cases or promote an adapter's measured capability label.
 
 ## Declaration format
 
@@ -103,7 +103,7 @@ installed user-facing client.
 
 ## Runtime verification matrix
 
-| Runtime | Intended intercepted tools | Current status | Required proof before release |
+| Runtime | Intended intercepted tools | Current status | Remaining unverified coverage |
 |---|---|---|---|
 | Claude Code | Native `Write` and `Edit` pre-tool events | Partially verified: v2.1.252 main-session `Edit` under `-p` | Interactive and `Write` coverage, scope transition, resume, and subagent write |
 | Codex | Native `apply_patch` pre-tool events, including every target in a multi-file patch | Unverified | Trust/activation, single and multi-file patches, system-message visibility, resume, code-mode call, and subagent write |
@@ -160,14 +160,27 @@ enforcement.
 ## Harness migration
 
 Migration across harness versions is explicit through `doc-create` and its
-deterministic helper. The v9 transition validates client compatibility and
-recognized legacy ownership, preserves project content, places the managed
-protocol in `AGENTS.md`, removes only the exact recognized managed root
-`CLAUDE.md`, and publishes the profile version last. Required routing scopes
-remain inline in their own files. Foreign content, symlinks, or ambiguous
-layouts stop migration before publication; saved transactions support rollback.
-The helper does not guess prose merges or trim an index to pass its size limit.
-Historical v6/v7/v8 templates are migration data, not current instruction entries.
+deterministic helper. The v9 transition validates recognized legacy ownership,
+preserves project content, places the managed protocol in `AGENTS.md`, and
+publishes the profile version last. Compatibility reports are optional; without
+one, migration records `not-evaluated` and makes no runtime support claim. An
+explicitly supplied report must validate and never silently falls back.
+
+The helper retires an exact recognized managed root `CLAUDE.md`, or an exact
+customized file adopted with explicit consent. A customized file remains
+untouched while the agent proposes preservation of project rules in AGENTS
+outside the managed block and requests specific approval. After approval,
+`--adopt-claude-sha256` binds inspect, dry-run, and apply to the approved source;
+a changed source requires renewed consent. The transaction retains the original
+custom bytes and mode. Waiting for that answer leaves the upgrade pending.
+
+Required routing scopes remain inline in their own files. Symlinks, sidecars,
+and ambiguous layouts prevent publication until resolved; routine local
+documentation repairs belong to the authorized upgrade. Saved transactions
+support rollback. The helper does not guess prose merges or trim an index to
+pass its size limit. Historical v6/v7/v8 templates are migration data, not
+current instruction entries. The complete migration contract lives in
+[documentation-harness.md](documentation-harness.md).
 
 `doc-start` and `doc-end` only compare versions. On an older repository they
 stop and direct the operator to the explicit migration; neither workflow mutates

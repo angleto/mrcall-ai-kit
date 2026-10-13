@@ -1,6 +1,6 @@
 ---
-doc_baseline_commit: b34a7371d0149a05cb32f6404befc198c1b54a9d
-doc_baseline_date: 2026-10-08
+doc_baseline_commit: ae510039249c6481e587b752ad000304a84f5912
+doc_baseline_date: 2026-10-13
 ---
 
 # Active Context
@@ -46,10 +46,18 @@ private reasoning is not observable. Installed-client verification and its
 limits remain in the corresponding durable contracts.
 
 Release versions are recorded in CHANGELOG.md and matching Git tags. Native
-compatibility verification remains explicitly deferred; the migration-prerequisite
-plan remains active. Release requires separate task authorization. The gate
+compatibility verification remains explicitly deferred. Mandatory migration
+prerequisites are superseded by the shipped upgrade UX; report acquisition is
+optional. Release requires separate task authorization. The gate
 enforces `HARNESS_VERSION` against the newest release tag's major in the
 installed checkout, with a named advisory for an in-flight release.
+
+Scope guard is accepted with its documented measured limits; further native
+acceptance trials are waived. Verification warnings read required command
+receipts for an explicitly selected task and never block a session. The CLI,
+registration roundtrips and real adapter callbacks have focused acceptance
+evidence. Installed notification adapters remain dormant on all three clients;
+native display and Codex hook trust are unverified.
 
 ## Unresolved
 
@@ -77,6 +85,7 @@ installed checkout, with a named advisory for an in-flight release.
 
 - Continue downstream orientation from each target's actual profile; migration
   remains an explicit task and legacy profiles must not be upgraded implicitly.
-- Complete the remaining scope-guard plan with installed-client evidence.
+- Activate verification notifications only when wanted, with an explicit native
+  session/task binding; direct checks remain available without that binding.
 - Refresh resolved models when their evidence changes, using the documented
   resolver and generation workflow.

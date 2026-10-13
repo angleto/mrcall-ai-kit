@@ -266,6 +266,12 @@ host-level guarantee that a model cannot bypass the entire lifecycle or invent
 an attestation. Preserve actual result references, pending obligations, and
 unverifiable findings across delegation and resumption.
 
+The optional [verification advisory](verification-warnings.md) reads required
+mechanical/focused receipts for an explicitly selected task and reports missing,
+failed or stale evidence without blocking a session. Finalized historical tasks
+stay quiet. Optional notifications require an exact runtime/session binding;
+they never infer a current task or replace this completion contract.
+
 ## Work traces and living context
 
 Substantial or multi-session work has a dated brief and plan before execution.

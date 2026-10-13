@@ -105,6 +105,14 @@ The baseline commit/date keys must already exist before review; finalization
 cannot hide new structure inside a metadata exemption. Use existing task
 recovery instead of resetting evidence to evade a refusal.
 
+Optional verification warnings reuse this exact repository/task and its command
+receipts. When the installed helper exists, run its `check --repo "$repo_root"
+--task "$task_id"` before claiming required checks are verified. The helper is
+`${MRCALL_KIT_HOME:-$HOME/.config/mrcall-ai-kit}/verification-warnings/verification_warnings.py`.
+Bind its optional notifications only with a known native runtime/session ID;
+context_id is not that identifier. Missing helper/binding is a stated coverage
+limit; warnings are advisory and do not replace any completion check below.
+
 The lead writes truthful obligation JSON and submits each with
 `--completion attest --input "$attestation" --json`:
 

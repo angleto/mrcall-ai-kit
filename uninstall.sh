@@ -132,6 +132,14 @@ if [[ -f "$SCOPE_REGISTER" && -v SRC_OF["$SCOPE_REGISTER"] ]] && owned_item "$SC
     fi
   done
 fi
+WARNINGS_REGISTER="$KIT_GLOBAL/verification-warnings/register.py"
+if [[ -f "$WARNINGS_REGISTER" && -v SRC_OF["$WARNINGS_REGISTER"] ]] && owned_item "$WARNINGS_REGISTER"; then
+  for runtime in claude codex opencode; do
+    if $DRY_RUN; then python3 "$WARNINGS_REGISTER" "$runtime" unregister --dry-run
+    else python3 "$WARNINGS_REGISTER" "$runtime" unregister
+    fi
+  done
+fi
 CODEX_ROSTER="$KIT_GLOBAL/codex-agent-roster.py"
 CODEX_BLOCK="$KIT_GLOBAL/codex-AGENTS.block.md"
 if [[ -f "$CODEX_ROSTER" && -f "$CODEX_BLOCK" && -v SRC_OF["$CODEX_ROSTER"] && -v SRC_OF["$CODEX_BLOCK"] ]] && owned_item "$CODEX_ROSTER" && owned_item "$CODEX_BLOCK"; then

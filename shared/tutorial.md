@@ -35,9 +35,11 @@ final review before advancing the baseline. Release needs separate authority.
 The mechanical half is `doc-check.py`, including a compact `--startup --json`
 result. It checks structure and state, never semantic truth. `doc-migrate.py`
 provides inspect, dry-run, apply, and saved-transaction rollback. `doc-create`
-uses that helper for an explicit upgrade and preserves project prose. Migration
-requires actual scoped compatibility evidence; unsupported configurations stop
-before writes. Installed commands alone do not prove client compliance, and a
+uses that helper for an explicit upgrade and preserves project prose. Layout
+migration needs no compatibility report; an explicitly supplied report must
+validate. Customized CLAUDE files lead to a preservation proposal and exact-file
+adoption consent, with original bytes retained for rollback. Installed commands
+alone do not prove client compliance, and a
 client can still bypass the instruction-based lifecycle.
 
 <!-- capability: ai-help | proof: commands/ai-help.md | covers: ai-help ai-tutorial -->
@@ -182,3 +184,22 @@ under OpenCode, and what will not carry over. The `migrate-from-cc` skill does
 the move.
 
 Reach for it before assuming a repo works in both, not after.
+
+<!-- capability: verification-warnings | proof: commands/verification-warnings.md | covers: verification-warnings -->
+## Verification warnings
+
+Reach for it when recorded verification must stay visible during a task without blocking tools.
+
+Optional advisory hooks report missing, failed, content-changing or stale required
+mechanical/focused receipts for an explicitly bound task. Install the
+`verification-warnings` feature, then use `/verification-warnings on` on Claude
+Code/OpenCode or invoke the Codex skill. Installation stays dormant by default.
+`off` removes only this feature's registrations and bindings; `status` reports
+registration, with Codex trust unverified until confirmed in `/hooks`.
+
+Bind an actual available native session ID to the canonical repository and task
+using the installed `verification_warnings.py bind` CLI. Without a known session
+ID, use its direct `check --repo PATH --task ID`; hooks remain silent. Warnings
+are deduplicated and never block tools or replace completion gates. They inspect
+recorded execution, not natural-language claims. Native display visibility and
+OpenCode 2 remain unverified.

@@ -1,5 +1,5 @@
 ---
-status: active
+status: superseded
 brief: docs/briefs/2026-10-07-migration-prerequisites.md
 ---
 
@@ -146,3 +146,13 @@ The mandatory acquisition direction is superseded by the approved
 does not need a compatibility report. The collector and strict report path
 remain optional tools; outstanding native measurements are not prerequisites
 for downstream upgrades. No missing historical review is asserted complete.
+
+## Operator supersession decision — 2026-10-13
+
+The operator authorizes marking this plan `superseded`. The shipped
+[upgrade UX](2026-10-08-doc-create-upgrade-ux.md) and
+[custom CLAUDE adoption](2026-10-08-custom-claude-upgrade-consent.md) workstreams
+replace its mandatory compatibility-report and terminal-refusal direction.
+Reports remain optional and strict when supplied; customized CLAUDE files use
+a preservation proposal and hash-bound explicit adoption consent. Outstanding
+native measurements and missing historical reviews are not claimed complete.

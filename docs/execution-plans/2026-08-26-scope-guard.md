@@ -1,5 +1,5 @@
 ---
-status: active
+status: completed
 ---
 
 # Scope guard: execution plan
@@ -413,3 +413,12 @@ Expected modifications:
 
 If Phase 0 disproves the brief's strong visibility claim for a runtime, changing
 that claim is an explicit gated design decision, not an incidental plan edit.
+
+## Operator closure decision — 2026-10-13
+
+The operator accepts the delivered scope-guard implementation and authorizes
+closure without the remaining acceptance work. The original unchecked tasks
+remain historical requirements, not continuing obligations of this plan.
+Unrun tests and runtime matrix cells are not asserted to have passed; the
+measured and unverified labels in [scope-guard.md](../scope-guard.md) remain
+unchanged. Completion metadata is finalized through the documentation checker.

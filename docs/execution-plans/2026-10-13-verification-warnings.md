@@ -1,0 +1,55 @@
+---
+status: completed
+brief: docs/briefs/2026-10-13-verification-warnings.md
+---
+# Verification warnings and accepted plan closure
+
+## Approved scope and classification
+
+Implement docs/briefs/2026-10-13-verification-warnings.md. This is substantial development: a new observable runtime behavior and three optional adapters change a behavior boundary. A fast path is inappropriate. Reuse doc-evidence.py's actual command receipts, required(record), identity, load and snapshot helpers; do not introduce another execution, declaration or receipt system. Existing completion refusals remain intact.
+
+The operator accepts scope-guard's measured implementation with remaining native acceptance waived, replaces agent-layer session blocking with warnings, and supersedes mandatory migration prerequisites. Those documentation decisions belong to the lead's closure worker; backend and adapter workers do not edit those historical plans. No release or tag is authorized.
+
+## Dependencies and ownership
+
+M1 backend implementation -> fresh independent M1 review -> M2 runtime and installation implementation -> fresh independent M2 review -> documentation reconciliation/doc-critic -> separate final review and completion finalization.
+
+Backend worker owns a new shared/scripts/verification_warnings.py, focused backend CLI acceptance tests and only the minimum read-only integration needed with shared/scripts/doc-evidence.py. Prefer dynamic loading of the existing checker and evidence module, without modifying their completion semantics. Runtime worker subsequently owns new Claude/Codex warning adapters, an OpenCode warning plugin, a new feature-specific registration helper, install.sh/uninstall.sh integration, command/skill entries and focused adapter/registration tests. No overlapping edits between these workers. Lead/docs worker owns durable docs, shared worker instructions, mirrored doc-end workflow text and historical plan closure. Each worker must preserve concurrent changes.
+
+## M1: Receipt advisory and explicit session binding
+
+Deliver an installed-capable Python CLI at ~/.config/mrcall-ai-kit/verification-warnings/verification_warnings.py. Provide `check --repo PATH --task ID [--json]`, `bind --runtime claude|codex|opencode --session ID --repo PATH --task ID`, `unbind --runtime RUNTIME --session ID`, and `status [--runtime RUNTIME --session ID]`. `check` performs no writes and always returns zero, including malformed/missing evidence diagnostics. Bind validates the canonical worktree identity and existing explicitly named record; it does not initialize a completion task. It writes only kit-owned session state outside repository content. Unbind removes only that selected binding. Status reports bindings, not a guessed current task.
+
+Reuse identity and load to enforce canonical repository, worktree Git directory and task equality. Never search for a newest task or fall back to another record. Select execution obligations from required(record) intersected with mechanical/focused. For each, report missing receipt, nonzero exit_status, content_unchanged not true, or stale snapshot against the current existing snapshot helper. A diagnostic identifies task and obligation and advises rerunning that existing completion action; it does not fabricate success, request approval or run the check itself. A finalized record is silent before snapshot/workflow freshness calculations, even after later commits. Bad evidence/configuration becomes a scoped diagnostic, not an exception escaping into a hook.
+
+Store explicit runtime-session bindings and emission digests under kit-owned state, with filenames derived from identifiers rather than raw path interpolation, atomic writes and restrictive modes. Runtime evaluation checks payload cwd identity against the stored repo and git_dir before loading a task. Missing identifiers, absent bindings and cross-worktree sessions are silent. Deduplicate emitted warning sets by runtime/session/task plus stable diagnostic digest; repeated identical warnings emit once, changed diagnostics emit again, and a quiet interval clears the emission marker so recurrence becomes visible. Only runtime emission mutates this cache; direct check stays read-only. Session cleanup removes only that runtime/session state.
+
+Verification: focused subprocess acceptance runs the actual CLI against disposable committed repositories and existing completion initialization/run-check paths. Assert exact repository and record bytes unchanged by check; missing, failed, content-changing and stale receipts warned; current passing receipts quiet; finalized record quiet after a commit; absent/unrelated/cross-worktree binding quiet; explicit valid binding selected; malformed record/checker failure zero-exit diagnostic; warning recurrence and duplicate suppression. Prove the unchanged completion checker still refuses incomplete required evidence. No native launches.
+
+M1 review must inspect the current receipt schema and required/snapshot reuse, confirm no new record format for checks, and independently execute the smallest failing/quiet CLI cases. M2 starts only after APPROVED.
+
+## M2: Advisory runtime delivery and dormant registration
+
+Claude and Codex adapters receive official structured hook payloads, use session_id and cwd, and consult only the explicit binding. Register an advisory PreToolUse callback without a restrictive mutation-only matcher; observe the next tool boundary after receipts or content change. Emit `systemMessage` and/or documented additionalContext only; never permissionDecision, deny/allow decisions, stop blocking fields or tool-input/output mutation. Unexpected input, unavailable backend and runtime errors return zero with no exception; avoid global noise for unbound sessions. Cleanup uses SessionEnd only where supported, with CLI unbind always available.
+
+OpenCode stable 1.x adapter uses tool.execute.before input.sessionID and plugin directory for the same explicit binding. Display a warning through the existing client TUI notification API if available; catch notification/bridge errors and return normally. Never throw, rewrite args/output, inject assistant messages or call a model. Unsupported event or display shapes remain silent. Keep OpenCode 2 and native notification visibility unverified until measured. Typed fixtures execute the real adapter callbacks and stub only the runtime notification client, preserving callback behavior.
+
+Add feature `verification-warnings` independently of reread/scope-guard, installing backend, adapters and registrar as dormant artifacts. Normal and --yes installation must not activate it. Explicit `--activate-verification-warnings RUNTIMES|all` or the feature command's `on` performs registration; `off` unregisters only this feature; `status` distinguishes installed/dormant/registered and Codex trust unverified. CLI registration path is ~/.config/mrcall-ai-kit/verification-warnings/register.py RUNTIME on|off|status. Add Claude/OpenCode command entries and Codex skill entry for `/verification-warnings` on/off/status plus explicit bind/unbind/check instructions.
+
+Registrar must preserve foreign configuration, including foreign hook entries sharing the same hook group: remove only the exact owned command entry, retain remaining hooks/group keys, and reject malformed ownership/configuration rather than overwrite. OpenCode activation owns one uniquely named plugin link and refuses replacing foreign content. Uninstall unregisters warnings before deleting managed artifacts; scope/reread hooks remain independent. Registration errors may fail their management CLI; runtime warning adapters must not fail sessions. Do not enable on the operator's real configuration without explicit activation.
+
+Verification: isolated HOME/config installed roundtrip with foreign sentinel hooks/plugins; install default and --yes remain dormant; explicit on -> status -> off -> on -> uninstall preserves sentinels and settings keys. Run real Python adapters via stdin for bound/unbound/current/missing/malformed payloads and assert exit zero and no decision fields. Run OpenCode plugin through typed fixture callbacks: warning emitted once, repeated suppressed, args unchanged, client notification exception swallowed, absent session silent. Run installed check/bind/status/unbind path and show canonical worktree/task selection. Validate script/workflow mirrors and shell syntax for touched installer surfaces. Native UI, trust activation and full suites are explicitly deferred, not claimed supported.
+
+## Closure and rollback
+
+After M2 integration review, lead reconciles README, runtime support, documentation harness, active context, affected shared worker instructions and doc-end mirrors. Worker instructions name the existing task ID; when the runtime session ID is actually available they explicitly bind it. When unavailable, run direct `check --repo ... --task ...`, state runtime binding unavailable, and leave hooks silent. Never infer a session ID from newest files or conflate context_id with a native runtime ID.
+
+Freeze checker/evidence/doc-end bytes before initializing this task's completion record. Preserve approved brief/plan and milestone snapshots outside repository content. Use one declared active->completed transition for this new dated plan. Leave the old agent-layer plan active with a reviewed acceptance amendment preserving historical prose until the new work is finalized. Then use a separate documentation completion task declaring its active->completed transition, referencing the completed warning work and retained real results. Scope-guard closure and migration supersession are handled by the lead's separate documentation task. No completed status is hand-edited to bypass a checker transition, and no checker expansion is needed.
+
+Run focused installed acceptance, mechanical gate, explicit doc-critic including living-context shape, pre-review completion check and fresh final reviewer. Register actual retained results and finalize only after success. Keep main clean through a task commit only if the lead has explicit commit authority; otherwise report the limitation rather than silently stash unfinished work. No release/tag.
+
+Rollback: turn off only this feature to remove owned registrations, then revert its scoped source/install/docs changes if needed. Preserve foreign config and session state until unregister completes. Direct check failures cannot alter repository records; warnings never substitute for required completion gates.
+
+## What this establishes and does not establish
+
+Establishes advisory reporting of declared mechanical/focused execution receipts for an explicitly bound runtime session and task, deterministic nonblocking adapters, and dormant independent installation. It does not authenticate agent honesty, parse natural-language success claims, detect arbitrary undeclared tests, make completion optional, prove native UI visibility or establish scope-guard's waived native matrix. Missing session IDs mean runtime warnings are unavailable, not that the task is verified.

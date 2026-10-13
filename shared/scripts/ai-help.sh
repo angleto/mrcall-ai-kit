@@ -80,4 +80,12 @@ if [ -f "$HOME/.config/mrcall-ai-kit/reread-hook.py" ]; then
   hook_state "re-read guard" reread.on reread-hook
 fi
 
+if [ -f "$HOME/.config/mrcall-ai-kit/verification-warnings/register.py" ]; then
+  for entry in "Claude Code|claude" "Codex|codex" "OpenCode|opencode"; do
+    name=${entry%%|*}; runtime=${entry#*|}
+    show "$name" || continue
+    python3 "$HOME/.config/mrcall-ai-kit/verification-warnings/register.py" "$runtime" status
+  done
+fi
+
 [ "$here" = all ] || printf '\nShowing %s only. `/ai-help all` for every runtime.\n' "$here"

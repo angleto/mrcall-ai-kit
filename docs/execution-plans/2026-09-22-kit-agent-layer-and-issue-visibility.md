@@ -1,5 +1,5 @@
 ---
-status: active
+status: completed
 ---
 
 # Making the kit better: the agent layer, and issues you can see
@@ -463,3 +463,25 @@ What remains unestablished:
   OpenCode halves of item 4 are open.
 - **This plan does not re-verify the investigation that produced it**: those
   findings carry the record of three review gates, not a fresh check here.
+
+## Revised remaining requirement — 2026-10-13
+
+The operator replaces item 4's session-blocking proposal with advisory warnings.
+The [verification-warning workstream](2026-10-13-verification-warnings.md)
+owns shared required-command receipt diagnostics, explicit runtime/session task
+binding, optional on/off notifications and independent review. It does not
+classify prose or authenticate agent honesty, and leaves existing completion
+gates unchanged. This plan remains active until that revised requirement is
+delivered and its separate checker-owned closure succeeds. Historical research
+limits are not retroactively claimed verified.
+
+## Revised requirement delivery — 2026-10-13
+
+The warning-only implementation has approved backend and runtime milestones.
+Focused installed CLI and real callback acceptance verify receipt diagnostics,
+explicit task binding, advisory-only responses, dormant registration and foreign
+hook/plugin preservation. Source worker rules and installed Codex profiles carry
+the bounded advisory instruction. Native notification visibility, Codex hook
+trust and broad client matrices remain unverified. The dated warning plan owns
+final review and completion evidence; this older plan's status transition uses a
+separate documentation completion task after that work is finalized.

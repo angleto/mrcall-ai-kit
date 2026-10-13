@@ -5,6 +5,26 @@ newest first, preserved verbatim. Cold storage: never read by `/doc-start`,
 queried on demand to answer "when did we do X" without reconstructing it from
 `git log -p`.
 
+## 2026-10-13 — Verification advisory delivery
+
+Scope guard is accepted with its documented measured limits; further native
+acceptance trials are waived. The remaining agent-layer work is a warning-only
+advisory for missing or stale required verification receipts; implementation
+and installed verification are pending.
+
+- Deliver the warning-only verification advisory through the reviewed worker
+  chain, preserving the existing completion gate and opt-in hook activation.
+
+## 2026-10-13 — Accepted scope guard and superseded migration prerequisites
+
+Release versions are recorded in CHANGELOG.md and matching Git tags. Native
+compatibility verification remains explicitly deferred; the migration-prerequisite
+plan remains active. Release requires separate task authorization. The gate
+enforces `HARNESS_VERSION` against the newest release tag's major in the
+installed checkout, with a named advisory for an in-flight release.
+
+- Complete the remaining scope-guard plan with installed-client evidence.
+
 ## 2026-10-06 — Superseded release snapshot
 
 Release requires task authorization in addition to the profile command.

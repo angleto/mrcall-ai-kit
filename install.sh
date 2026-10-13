@@ -22,7 +22,7 @@ set -euo pipefail
 #
 # Flags (any provided value skips its prompt):
 #   --environment claude|codex|opencode|all|both
-#   --features    doc-harness,orchestration,workers,migrate,router,reread,scope-guard,shortcuts (or: all)
+#   --features    doc-harness,orchestration,workers,migrate,router,reread,scope-guard,verification-warnings,shortcuts (or: all)
 #   --activate-scope-guard claude|codex|opencode|all (explicit hook opt-in)
 #   --mode        symlink|copy
 #   --on-exist    skip|overwrite|backup
@@ -46,7 +46,7 @@ BUDGETS="low medium high"                   # one rendering of every agent per b
 BUDGET_FILE="$KIT_GLOBAL/budget"            # this machine's budget; medium when absent
 AGENT_HOME="$KIT_GLOBAL/agents"             # every budget's rendering, installed: <runtime>/<budget>/<name>.md
 
-ENVIRONMENT="" ; FEATURES="" ; MODE="" ; ON_EXIST="" ; ACTIVATE_SCOPE=""
+ENVIRONMENT="" ; FEATURES="" ; MODE="" ; ON_EXIST="" ; ACTIVATE_SCOPE="" ; ACTIVATE_WARNINGS=""
 ASSUME_YES=false ; DRY_RUN=false
 
 list_entries() { # $1=dir → comma-joined basenames (strip .md), or (none)
@@ -64,6 +64,7 @@ Interactive by default; pass flags for non-interactive / CI use.
 Usage: ./install.sh [--environment claude|codex|opencode|all|both] [--features LIST|all]
                     [--mode symlink|copy] [--on-exist skip|overwrite|backup]
                     [--activate-scope-guard RUNTIMES|all]
+                    [--activate-verification-warnings RUNTIMES|all]
                     [--yes] [--dry-run] [--help]
 
   --environment: which AI tools to install for. claude, codex, opencode, or a
@@ -72,10 +73,12 @@ Usage: ./install.sh [--environment claude|codex|opencode|all|both] [--features L
               its config directory and nothing reads them until it exists.
               Features that only make sense elsewhere are skipped with a note.
   --features: doc-harness, orchestration, workers, migrate, router, reread, scope-guard,
-              shortcuts (comma list, or: all). Each is described below.
+              verification-warnings, shortcuts (comma list, or: all). Each is described below.
   --activate-scope-guard: explicitly register scope-guard hooks/plugins for a
               comma-separated subset of claude,codex,opencode (or: all).
               --yes and --features scope-guard alone leave it dormant.
+  --activate-verification-warnings: optional advisory hooks; feature installation
+              stays dormant without this flag or explicit on.
   --mode:     symlink = the installed file points at this checkout, so editing
               the kit edits your live config — and moving or deleting the
               checkout breaks it. Codex custom agents are always copied because
@@ -155,6 +158,7 @@ EOF
   echo "     installs:   common engine, registration helper, runtime adapter, command/skill"
   echo "     activation: dormant by default; interactive prompt or --activate-scope-guard"
   echo
+  echo "  verification-warnings: optional receipt advisories; dormant until explicit on. Native UI unverified."
   echo "Destinations: Claude Code -> ~/.claude/{commands,skills,agents}/ ; Codex -> ~/.agents/skills/ + ~/.codex/{agents,AGENTS.md} ; OpenCode -> ~/.config/opencode/{commands,skills,agents}/"
   echo "Agents: every kit agent is rendered once per budget (low, medium, high), each with the"
   echo "        models the kit resolved for it. All three renderings go to ~/.config/mrcall-ai-kit/agents/;"
@@ -171,6 +175,7 @@ while [[ $# -gt 0 ]]; do
     --features)    FEATURES="${2:-}";    shift 2 ;;
     --mode)        MODE="${2:-}";        shift 2 ;;
     --on-exist)    ON_EXIST="${2:-}";    shift 2 ;;
+    --activate-verification-warnings) ACTIVATE_WARNINGS="${2:-}"; shift 2 ;;
     --activate-scope-guard) ACTIVATE_SCOPE="${2:-}"; shift 2 ;;
     --yes|-y)      ASSUME_YES=true;      shift ;;
     --dry-run)     DRY_RUN=true;         shift ;;
@@ -234,7 +239,7 @@ $WANT_CC || $WANT_CODEX || $WANT_OC || { echo "Nothing selected. Exiting." >&2; 
 
 # ── Resolve features (offer OC-only content only if OpenCode is selected) ───
 want_feature() { [[ ",$FEATURES," == *",$1,"* || "$FEATURES" == all ]]; }
-DO_DOC=false ; DO_ORCH=false ; DO_WORKERS=false ; DO_MIGRATE=false ; DO_ROUTER=false ; DO_SCOPE=false ; DO_SHORTCUTS=false ; DO_REREAD=false
+DO_DOC=false ; DO_ORCH=false ; DO_WORKERS=false ; DO_MIGRATE=false ; DO_ROUTER=false ; DO_SCOPE=false ; DO_SHORTCUTS=false ; DO_REREAD=false ; DO_WARNINGS=false
 if [[ -n "$FEATURES" ]]; then
   want_feature doc-harness  && DO_DOC=true
   want_feature orchestration && DO_ORCH=true
@@ -244,6 +249,7 @@ if [[ -n "$FEATURES" ]]; then
   want_feature scope-guard  && DO_SCOPE=true
   want_feature shortcuts    && DO_SHORTCUTS=true
   want_feature reread       && DO_REREAD=true
+  want_feature verification-warnings && DO_WARNINGS=true
 else
   need_tty_or_flag "--features"
   ask_yn "Install doc-harness (doc-create/start/end + doc-check + doc-critic)? [GLOBAL, cross-tool]" y && DO_DOC=true
@@ -257,6 +263,7 @@ else
   fi
   ask_yn "Install the re-read pass (Claude Stop hook; OpenCode /sc; Codex \$sc skill)? [GLOBAL, cross-tool]" n && DO_REREAD=true
   ask_yn "Install scope guard (dormant unless activated separately)? [GLOBAL, cross-tool]" n && DO_SCOPE=true
+  ask_yn "Install verification warnings (dormant, advisory only)?" n && DO_WARNINGS=true
   ask_yn "Install shortcuts (nr, av — on-demand instruction overrides; typed commands on Claude Code/OpenCode, a model-invoked skill on Codex)? [GLOBAL, cross-tool]" n && DO_SHORTCUTS=true
 fi
 # OC-only features are meaningless without OpenCode selected.
@@ -300,6 +307,24 @@ $ACTIVATE_OC && ! $WANT_OC && { echo "cannot activate scope guard for unselected
 $WANT_CC || ACTIVATE_CC=false
 $WANT_CODEX || ACTIVATE_CODEX=false
 $WANT_OC || ACTIVATE_OC=false
+
+WARNING_RUNTIMES=()
+if [[ -n "$ACTIVATE_WARNINGS" ]]; then
+  $DO_WARNINGS || { echo "--activate-verification-warnings requires feature verification-warnings" >&2; exit 1; }
+  IFS=',' read -r -a warning_requested <<< "$ACTIVATE_WARNINGS"
+  for runtime in "${warning_requested[@]}"; do
+    case "$runtime" in
+      all)
+        if $WANT_CC; then WARNING_RUNTIMES+=(claude); fi
+        if $WANT_CODEX; then WARNING_RUNTIMES+=(codex); fi
+        if $WANT_OC; then WARNING_RUNTIMES+=(opencode); fi ;;
+      claude) $WANT_CC || exit 1; WARNING_RUNTIMES+=(claude) ;;
+      codex) $WANT_CODEX || exit 1; WARNING_RUNTIMES+=(codex) ;;
+      opencode) $WANT_OC || exit 1; WARNING_RUNTIMES+=(opencode) ;;
+      *) echo "Invalid verification warning runtime: $runtime" >&2; exit 1 ;;
+    esac
+  done
+fi
 
 # ── Mode + existing-file policy ────────────────────────────────────────────
 [[ -n "$MODE" ]]     || { need_tty_or_flag "--mode";     MODE="$(ask_choice 'Symlink or copy? (symlink = edit kit = edit config)' symlink symlink copy)"; }
@@ -423,6 +448,27 @@ if $DO_REREAD; then
   fi
   $WANT_OC && add_one "$SCRIPT_DIR/opencode/commands/sc.md" "$OC_DIR/commands/sc.md"
   $WANT_CODEX && add_one "$SCRIPT_DIR/codex/skills/sc" "$CODEX_SKILLS_DIR/sc"
+fi
+if $DO_WARNINGS; then
+  add_one "$SCRIPT_DIR/shared/scripts/verification_warnings.py" "$KIT_GLOBAL/verification-warnings/verification_warnings.py"
+  add_one "$SCRIPT_DIR/shared/scripts/verification_warnings_register.py" "$KIT_GLOBAL/verification-warnings/register.py"
+  if ! $DO_DOC; then
+    add_one "$SCRIPT_DIR/shared/scripts/doc-check.py" "$KIT_GLOBAL/doc-check.py"
+    add_one "$SCRIPT_DIR/shared/scripts/doc-evidence.py" "$KIT_GLOBAL/doc-evidence.py"
+    add_one "$SCRIPT_DIR/shared/templates/AGENTS.block.md" "$KIT_GLOBAL/AGENTS.block.md"
+  fi
+  if $WANT_CC; then
+    add_one "$SCRIPT_DIR/claude/scripts/verification-warnings-hook.py" "$KIT_GLOBAL/verification-warnings/claude/verification-warnings.py"
+    add_one "$SCRIPT_DIR/claude/commands/verification-warnings.md" "$CC_DIR/commands/verification-warnings.md"
+  fi
+  if $WANT_CODEX; then
+    add_one "$SCRIPT_DIR/codex/scripts/verification-warnings-hook.py" "$KIT_GLOBAL/verification-warnings/codex/verification-warnings.py"
+    add_one "$SCRIPT_DIR/codex/skills/verification-warnings" "$CODEX_SKILLS_DIR/verification-warnings"
+  fi
+  if $WANT_OC; then
+    add_one "$SCRIPT_DIR/opencode/plugins/verification-warnings.ts" "$KIT_GLOBAL/verification-warnings/opencode/verification-warnings.ts"
+    add_one "$SCRIPT_DIR/opencode/commands/verification-warnings.md" "$OC_DIR/commands/verification-warnings.md"
+  fi
 fi
 if $DO_SCOPE; then
   add_one "$SCRIPT_DIR/shared/scripts/scope_guard.py" "$KIT_GLOBAL/scope-guard/scope_guard.py"
@@ -634,6 +680,8 @@ if [[ ${#RET_DST[@]} -gt 0 || ${#WAIT_DST[@]} -gt 0 || ${#KEEP_DST[@]} -gt 0 ]];
   echo
 fi
 
+for runtime in "${WARNING_RUNTIMES[@]}"; do echo "  activate verification warnings for $runtime"; done
+
 # ── Confirm ────────────────────────────────────────────────────────────────
 if ! $DRY_RUN && ! $ASSUME_YES; then
   ask_yn "Proceed?" n || { echo "Aborted."; exit 0; }
@@ -773,6 +821,11 @@ if $DO_SCOPE; then
 $ACTIVATE_CODEX && register_scope_guard codex "$HOME/.codex/hooks.json"
   $ACTIVATE_OC && register_scope_guard opencode "$OC_DIR/plugins/mrcall-scope-guard.ts"
 fi
+for runtime in "${WARNING_RUNTIMES[@]}"; do
+  if $DRY_RUN; then echo "  [dry] register verification warnings for $runtime"
+  else python3 "$KIT_GLOBAL/verification-warnings/register.py" "$runtime" on
+  fi
+done
 if $DO_DOC && $WANT_CODEX; then
   if $DRY_RUN; then
     echo "  [dry]    install kit block in $HOME/.codex/AGENTS.md"
@@ -807,5 +860,6 @@ if $DO_SCOPE; then
   if $WANT_CODEX && ! $ACTIVATE_CODEX; then echo "  Codex scope guard installed but dormant: invoke the scope-guard skill to activate."; fi
   if $WANT_OC && ! $ACTIVATE_OC; then echo "  OpenCode scope guard installed but dormant: run /scope-guard on to activate."; fi
 fi
+$DO_WARNINGS && echo "  Verification warnings installed: dormant unless explicitly registered; bind a known runtime session/task for advisories."
 $DO_SHORTCUTS && echo "  Shortcuts installed: /nr and /av on Claude Code/OpenCode; on Codex, ask for the nr or av skill by name."
 $DRY_RUN || echo "  Install log: $MANIFEST  (run ./uninstall.sh to undo exactly these)."

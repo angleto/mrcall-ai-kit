@@ -19,6 +19,8 @@ Powerful. Easy to install, easier to use.
 - Each routing document can declare its exact purpose and boundary in a
   mechanically checked scope block
 - Agent roles are defined in `shared/roles/` — name your agent for its job, not its model
+- Optional verification warnings expose missing or stale check receipts without
+  blocking a session; runtime notifications remain independently switchable.
 
 ## Install
 
@@ -67,6 +69,9 @@ their client settings.
 - **`nr`** — answer one question right now: no tools, no subagents, no work
   trace, no review gates, for that turn only.
 - **`av`** — restate the engineering-lead stance on demand.
+- **`verification-warnings`** — inspect required check receipts for an explicit
+  task; on/off/status manage optional runtime notifications. See the
+  [warning contract](docs/verification-warnings.md).
 - **`/router`** (Claude Code) — opt-in hook; once on, it names this session's
   shared-memory file, and how a delegated worker should use it, on each prompt
   of a session that has a `docs/` tree in reach — so the session and any worker

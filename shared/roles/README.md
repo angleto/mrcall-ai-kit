@@ -97,3 +97,9 @@ workers do not reconstruct the lead's transcript. Final reviewers require
 current mechanical, explicit critic, coverage, and living-context shape results
 for applicable closure. Missing or stale evidence yields `REVISE`. These role
 instructions do not supply a runtime final-answer interceptor.
+
+When a handoff names an existing completion task, role instructions use the
+optional [verification advisory](../../docs/verification-warnings.md) to inspect
+its actual required-command receipts before reporting them verified. Notifications
+need an explicit native session binding; warnings do not block a session or
+replace completion gates. This instruction does not classify report prose.

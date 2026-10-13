@@ -30,6 +30,8 @@ Do not duplicate that inventory here.
   behavior, capability levels, and known bypasses.
 - [`reread-guard.md`](reread-guard.md) — per-runtime re-read behavior and
   installed-client verification status.
+- [`verification-warnings.md`](verification-warnings.md) — advisory execution
+  receipts, explicit session binding and independently switchable notifications.
 - [`model-router.md`](model-router.md) — the opt-in model router: session
   memory, rotation and hand-off, and the worker-report budget.
 - [`known-issues-and-solutions.md`](known-issues-and-solutions.md) — recurring

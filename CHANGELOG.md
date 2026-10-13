@@ -8,6 +8,11 @@ Release, after an optional first line naming the commit.
 
 ## Unreleased
 
+- Optional verification warnings reuse required command receipts and explicit
+  session/task bindings; they report missing or stale evidence without denying
+  a tool or blocking a session. Scope guard is accepted with its measured limits;
+  mandatory migration prerequisites are superseded by the shipped upgrade UX.
+
 ## v9.2.0 — 2026-10-08
 
 - Customized CLAUDE upgrades request concrete preservation/adoption consent
