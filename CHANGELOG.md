@@ -8,6 +8,8 @@ Release, after an optional first line naming the commit.
 
 ## Unreleased
 
+## v9.3.1 — 2026-10-18
+
 - Resolve filesystem skills from their declared catalog paths; repository-local
   harness overrides require an individual present entry. An unrelated CS-workflow
   symlink no longer implies a local documentation skill.
