@@ -53,6 +53,12 @@ the appropriate `doc-end` checks before delivering changes. You can still call
 them explicitly. Read-only and brief-only requests keep their limited scope;
 they do not automatically authorize implementation or consolidation.
 
+Fresh Codex leads also receive a decision-before-yielding instruction through
+the doc-harness install: continue useful authorized work while acceptance remains
+unmet, within scope and resource limits. Generated kit agents receive the same
+decision for their own assignment. Ordinary Claude leads are outside this route.
+See [entry points, update steps and measured limits](docs/reread-guard.md#mandate-completion).
+
 These instructions and the completion checker improve observable compliance;
 they do not make every client intercept a skipped workflow. Support depends on
 the runtime and configuration. See the

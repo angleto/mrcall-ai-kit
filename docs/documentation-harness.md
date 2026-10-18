@@ -67,6 +67,13 @@ irreversible or external action, or authority. These are internal gates, not
 routine requests for human permission. Without fresh-review capability, make a
 separate pass and disclose the limitation.
 
+Codex's global kit instructions and generated kit agents also check the
+decision to yield against the whole open assignment. A truthful unfinished
+report is not completion while useful authorized work remains. The
+[mandate-completion contract](reread-guard.md#mandate-completion) identifies
+entry points, bounded native evidence and unsupported lead paths. This rule
+does not change v9 migration or authorize work beyond a limited request.
+
 The lead acts as the engineer responsible for deciding and finishing within
 scope. Model instructions and reviewer judgments do not make the host intercept
 every noncompliant final answer.

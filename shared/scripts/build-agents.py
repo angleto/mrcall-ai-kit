@@ -84,6 +84,7 @@ def read(path: pathlib.Path) -> str:
 def reread_body() -> str:
     return "\n\n".join([
         "## Final-answer re-read",
+        read(ROLES / "block-mandate-completion.md"),
         "Before returning any final answer or report, privately check the draft "
         "against every item below. Run an available check that the draft names "
         "but has not performed, then correct the draft. Do not announce this "
@@ -206,7 +207,11 @@ def codex_body(entry: dict) -> str:
 
 
 def targets() -> dict[pathlib.Path, str]:
-    out = {SKILL: skill_body()}
+    template = read(ROLES / "codex-lead.template.md")
+    if template.count("{{MANDATE_COMPLETION}}") != 1:
+        raise SystemExit("codex-lead.template.md needs one mandate placeholder")
+    lead = template.replace("{{MANDATE_COMPLETION}}", read(ROLES / "block-mandate-completion.md")) + "\n"
+    out = {SKILL: skill_body(), ROOT / "codex/AGENTS.block.md": lead}
     models = load_models()
     for entry in load_manifest().values():
         if entry["runtime"] == "codex":

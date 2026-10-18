@@ -1,6 +1,6 @@
 ---
-doc_baseline_commit: e62a5a011950125bdab3510184b3849b211ec161
-doc_baseline_date: 2026-10-13
+doc_baseline_commit: 315ed1f98bf8929d421521c4476cd8d95dc1bc82
+doc_baseline_date: 2026-10-18
 ---
 
 # Active Context
@@ -44,6 +44,15 @@ Codex custom roles inherit the session model; Claude and OpenCode roles follow
 `/ai-budget`. Generated agents carry the shipped final-answer re-read checklist;
 private reasoning is not observable. Installed-client verification and its
 limits remain in the corresponding durable contracts.
+
+The mandate-completion candidate supplies fresh Codex leads and generated kit
+agents with an explicit decision before yielding. Its nine isolated native Codex
+CLI cases pass with real output/check evidence and legitimate-stop cases; no
+causal improvement rate or long-session reliability is established. Ordinary
+Claude leads are outside the new route. Codex's physical global entry and role
+copies still need refresh. Source-linked Claude/OpenCode instruction assets
+reflect the candidate; no global installer has run. Entry points and limits
+are in `reread-guard.md`.
 
 Release versions are recorded in CHANGELOG.md and matching Git tags. Native
 compatibility verification remains explicitly deferred. Mandatory migration

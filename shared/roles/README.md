@@ -33,6 +33,8 @@ model.
 | `models.json` | Claude Code and OpenCode model choices per role and budget, with scores, prices, and dates; written by the refresh |
 | `retired.txt` | files the kit once installed and has retired; no other live file may name them |
 | `orchestrate.md` | the leading role text; OpenCode leads keep their own text |
+| `block-mandate-completion.md` | the decision to yield, composed into Codex global instructions and every generated final-report procedure |
+| `codex-lead.template.md` | static source of the generated `codex/AGENTS.block.md`, with one mandate-completion placeholder |
 | `reread-checklist.md` | the six re-read rules embedded in every generated agent; also installed as an editable checklist by `--features reread` |
 
 A role agent's file is its stub, then its role text, then what every role
@@ -42,9 +44,11 @@ rendered once per budget on Claude Code and OpenCode, into
 `model:` line from `models.json`. Codex profiles are TOML files under
 `codex/agents/`, each generated once without a model pin.
 
-Every generated agent receives the six shipped re-read rules and an instruction
-to check its final report before delivery. Claude Code roles receive them in
-the preloaded `kit-role-rules` skill; OpenCode roles and leads carry them inline;
+Every generated agent receives the decision to yield, the six shipped re-read
+rules, and an instruction to check its final report before delivery. The decision
+applies to the bounded assignment, including useful authorized work still to do;
+accurately reporting incompleteness does not complete that assignment. Claude
+Code roles receive them in the preloaded `kit-role-rules` skill; OpenCode roles and leads carry them inline;
 Codex roles carry them in `developer_instructions`. Fixed report headers and
 the reviewer's verdict position take precedence over the checklist's
 answer-first wording. This is a model instruction, not a delivery hook. The
@@ -89,6 +93,14 @@ installer places physical TOML files under `~/.codex/agents/`: Codex 0.158.0
 rejected the symlink form in a real spawn probe. A global kit block in
 `~/.codex/AGENTS.md` tells a fresh lead when to use them. Codex roles inherit
 the session model; `/ai-budget` does not switch them.
+
+The generator also composes Codex's global kit block from `codex-lead.template.md`
+and `block-mandate-completion.md`; `--check` covers that output. Its installed
+`~/.codex/AGENTS.md` entry gives fresh Codex leads the decision independently of
+repository orientation. The canonical v9 repository block is unchanged. Ordinary
+Claude leads receive no new global instruction through this route; their kit
+workers receive the decision through `kit-role-rules`. See
+[delivery and measured limits](../../docs/reread-guard.md#mandate-completion).
 
 The v9 lead follows the managed root `AGENTS.md` block, personally loading
 routing and relevant documentation before source investigation. Bounded role

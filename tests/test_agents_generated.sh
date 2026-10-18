@@ -25,7 +25,7 @@ step "2. regenerating is a no-op (the generator is deterministic)"
 # hand edit step 1 just reported, and then blame it on the generator.
 SCRATCH="$(mktemp -d)"
 cp -r shared claude opencode codex "$SCRATCH"/
-outputs() { (cd "$SCRATCH" && find claude/agents opencode/agents codex/agents shared/skills/kit-role-rules -type f -exec md5sum {} + | sort); }
+outputs() { (cd "$SCRATCH" && find claude/agents opencode/agents codex/agents shared/skills/kit-role-rules codex/AGENTS.block.md -type f -exec md5sum {} + | sort); }
 python3 "$SCRATCH/shared/scripts/build-agents.py" >/dev/null
 FIRST="$(outputs)"
 python3 "$SCRATCH/shared/scripts/build-agents.py" >/dev/null
