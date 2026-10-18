@@ -158,7 +158,8 @@ EOF
   echo "     installs:   common engine, registration helper, runtime adapter, command/skill"
   echo "     activation: dormant by default; interactive prompt or --activate-scope-guard"
   echo
-  echo "  verification-warnings: optional receipt advisories; dormant until explicit on. Native UI unverified."
+  echo "  verification-warnings [cross-tool -> every selected runtime; optional advisory]"
+  echo "     installs:   receipt checks and optional notifications; dormant until explicit on. Native UI unverified."
   echo "Destinations: Claude Code -> ~/.claude/{commands,skills,agents}/ ; Codex -> ~/.agents/skills/ + ~/.codex/{agents,AGENTS.md} ; OpenCode -> ~/.config/opencode/{commands,skills,agents}/"
   echo "Agents: every kit agent is rendered once per budget (low, medium, high), each with the"
   echo "        models the kit resolved for it. All three renderings go to ~/.config/mrcall-ai-kit/agents/;"

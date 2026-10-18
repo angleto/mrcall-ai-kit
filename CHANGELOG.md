@@ -18,6 +18,9 @@ Release, after an optional first line naming the commit.
   OpenCode leads and kit workers receive the same bounded decision. Ordinary
   Claude leads remain outside this route. Codex requires installer refresh and
   fresh sessions; source-linked assets reflect checkout changes.
+- Installer help describes all nine offered features consistently; its coverage
+  check derives feature names from the actual option list rather than a fixed
+  whitelist.
 - Verification: isolated install/generation checks and nine native Codex CLI cases
   pass, including repair after a failed real check and legitimate stops. These
   samples do not establish a causal improvement rate, long-session reliability,

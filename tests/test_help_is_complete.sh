@@ -51,8 +51,20 @@ step "3. every feature in --features has a block under 'What gets installed'"
 # The failure this catches: a feature is added to the list and nobody writes
 # its block, so it is installable and undocumented.
 BAD=0
-FEATURES="$(echo "$HELP" | sed -n '/^ *--features:/,/^ *--[a-z]*-*[a-z]*:/p' \
-  | tr ',' '\n' | grep -oE '\b(doc-harness|orchestration|workers|migrate|router|reread|scope-guard|shortcuts)\b' | sort -u)"
+FEATURES="$(python3 - "$HELP" <<'FEATURES'
+import sys
+lines = sys.argv[1].splitlines()
+start = next(i for i, line in enumerate(lines) if line.lstrip().startswith('--features:'))
+value = lines[start].partition(':')[2]
+for line in lines[start + 1:]:
+    if line.lstrip().startswith('--'):
+        break
+    value += ' ' + line.strip()
+for name in sorted(set(part.strip() for part in value.partition('(')[0].split(','))):
+    assert name and all(c.islower() or c == '-' for c in name), name
+    print(name)
+FEATURES
+)"
 for f in $FEATURES; do
   echo "$HELP" | grep -qE "^  ${f} +\[" \
     || { echo "FAIL: feature '$f' is offered but has no block describing it"; BAD=1; FAIL=1; }
