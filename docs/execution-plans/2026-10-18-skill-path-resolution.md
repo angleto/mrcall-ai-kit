@@ -1,5 +1,5 @@
 ---
-status: active
+status: completed
 ---
 
 # Resolve declared skill sources
