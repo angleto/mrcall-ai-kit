@@ -1,5 +1,5 @@
 ---
-doc_baseline_commit: 315ed1f98bf8929d421521c4476cd8d95dc1bc82
+doc_baseline_commit: ce83ac606463132e7a437948afcd43eb0f63f896
 doc_baseline_date: 2026-10-18
 ---
 
@@ -45,14 +45,14 @@ Codex custom roles inherit the session model; Claude and OpenCode roles follow
 private reasoning is not observable. Installed-client verification and its
 limits remain in the corresponding durable contracts.
 
-The mandate-completion candidate supplies fresh Codex leads and generated kit
-agents with an explicit decision before yielding. Its nine isolated native Codex
-CLI cases pass with real output/check evidence and legitimate-stop cases; no
-causal improvement rate or long-session reliability is established. Ordinary
-Claude leads are outside the new route. Codex's physical global entry and role
-copies still need refresh. Source-linked Claude/OpenCode instruction assets
-reflect the candidate; no global installer has run. Entry points and limits
-are in `reread-guard.md`.
+Mandate-completion instructions are installed for Codex leads and all four
+physical role profiles; the operator-owned global instructions are preserved.
+Generated kit agents receive the same bounded decision before yielding. Nine
+isolated native Codex CLI cases pass with real output/check evidence and
+legitimate-stop cases; causal improvement and long-session reliability remain
+unestablished. Ordinary Claude leads are outside the new route. Source-linked
+Claude/OpenCode instruction assets reflect the same source. Entry points,
+restart guidance and measured limits are in `reread-guard.md`.
 
 Release versions are recorded in CHANGELOG.md and matching Git tags. Native
 compatibility verification remains explicitly deferred. Mandatory migration
