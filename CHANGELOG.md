@@ -8,6 +8,22 @@ Release, after an optional first line naming the commit.
 
 ## Unreleased
 
+## v9.3.0 — 2026-10-18
+
+- Fresh Codex leads and generated kit agents check whether the whole authorized
+  assignment is complete before yielding. Useful feasible work continues within
+  scope and resource limits; questions, briefs, reviews, pauses and genuine
+  authorization or external blockers keep their explicit stopping boundaries.
+- The lead instruction is composed into Codex's global kit block; generated
+  OpenCode leads and kit workers receive the same bounded decision. Ordinary
+  Claude leads remain outside this route. Codex requires installer refresh and
+  fresh sessions; source-linked assets reflect checkout changes.
+- Verification: isolated install/generation checks and nine native Codex CLI cases
+  pass, including repair after a failed real check and legitimate stops. These
+  samples do not establish a causal improvement rate, long-session reliability,
+  interactive behavior, real compaction or native other-runtime adherence.
+
+
 - Optional verification warnings reuse required command receipts and explicit
   session/task bindings; they report missing or stale evidence without denying
   a tool or blocking a session. Scope guard is accepted with its measured limits;
