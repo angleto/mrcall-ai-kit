@@ -179,8 +179,11 @@ sys.exit(1)
 
         # Bad repository layout (custom CLAUDE.md)
         (self.root / "CLAUDE.md").write_text("Custom rule not in legacy v8.\n")
+        custom_before = self.tree()
         res = self.invoke("prepare", expected=1)
-        self.assertIn("customized or unrecognized legacy CLAUDE.md", res["reasons"][0])
+        self.assertFalse(res["ready"])
+        self.assertIn("CLAUDE.md", res["reasons"][0])
+        self.assertEqual(custom_before, self.tree())
         (self.root / "CLAUDE.md").write_bytes((TEMPLATES / "legacy/v8/CLAUDE.md").read_bytes())
         self.assertEqual(before, self.tree())
 

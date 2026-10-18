@@ -317,7 +317,10 @@ class MigrationTests(unittest.TestCase):
                 path.write_text(replacement)
             before = self.tree()
             result = self.run_action("dry-run", expected=1)
-            self.assertIn("environment_files differ", result["reasons"][0])
+            inventory = "instruction_files" if path.name == "CLAUDE.local.md" else "environment_files"
+            self.assertIn(f"compatibility {inventory} differ", result["reasons"][0])
+            self.assertFalse(result["ready"])
+            self.assertEqual(result["next_action"]["operation"], "review-supplied-compatibility")
             self.assertEqual(before, self.tree())
             self.assertFalse(self.transaction.exists())
             if original is None:

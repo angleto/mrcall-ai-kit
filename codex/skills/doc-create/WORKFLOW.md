@@ -11,7 +11,7 @@ a version mismatch does not authorize migration.
 
 ## Preflight
 
-This workflow implements harness_version = 9. Read an existing docs/.doc-profile
+This workflow implements `harness_version = 9`. Read an existing docs/.doc-profile
 completely. v6/v7/v8 require a requested upgrade; v9 may be reapplied idempotently.
 Newer profiles require newer installed tooling. Earlier or ambiguous layouts
 are unsupported; preserve them rather than guess ownership. Require Git with
@@ -119,8 +119,8 @@ For fresh bootstrap prepare scoped AGENTS.md, docs/README.md and
 docs/active-context.md. Preserve existing bytes; add only verified facts. Root
 AGENTS owns inventory; docs/README routes transversal docs. Active context needs
 a real ancestor baseline and only State now, Unresolved and Next. Never invent
-verification. Create docs/execution-plans/ and docs/briefs/, with .gitkeep when
-empty. Add docs/sessions/ to .gitignore; do not create that runtime directory.
+verification. Create `docs/execution-plans/` and `docs/briefs/`, with .gitkeep
+when empty. Name dated briefs and plans `YYYY-MM-DD-<slug>.md`. Add docs/sessions/ to .gitignore; do not create that runtime directory.
 
 Each required routing doc has exactly one inline declaration:
 

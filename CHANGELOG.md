@@ -21,6 +21,9 @@ Release, after an optional first line naming the commit.
 - Installer help describes all nine offered features consistently; its coverage
   check derives feature names from the actual option list rather than a fixed
   whitelist.
+- Migration workflow states the dated brief/plan naming explicitly. Regression
+  checks match current refusal paths while preserving target-byte and transaction
+  nonmutation checks.
 - Verification: isolated install/generation checks and nine native Codex CLI cases
   pass, including repair after a failed real check and legitimate stops. These
   samples do not establish a causal improvement rate, long-session reliability,
