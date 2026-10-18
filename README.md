@@ -53,6 +53,11 @@ the appropriate `doc-end` checks before delivering changes. You can still call
 them explicitly. Read-only and brief-only requests keep their limited scope;
 they do not automatically authorize implementation or consolidation.
 
+Skills use the source declared in the session catalog. A required repository
+override wins only when that individual entry exists; absent local harness skills
+use their declared installed copies. See [skill resolution](docs/documentation-harness.md#entry-and-ownership)
+for the installed path resolver, diagnostics and update limits.
+
 Fresh Codex leads also receive a decision-before-yielding instruction through
 the doc-harness install: continue useful authorized work while acceptance remains
 unmet, within scope and resource limits. Generated kit agents receive the same

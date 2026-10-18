@@ -32,6 +32,7 @@ for mode in copy symlink; do
   test -f "$keywords"
   test -f "$test_home/.config/mrcall-ai-kit/doc-migrate.py"
   test -f "$test_home/.config/mrcall-ai-kit/doc-compat.py"
+  test -f "$test_home/.config/mrcall-ai-kit/skill-path.py"
   diff -qr "$KIT_DIR/shared/templates/legacy" "$test_home/.config/mrcall-ai-kit/legacy"
   python3 "$test_home/.config/mrcall-ai-kit/doc-migrate.py" --help > /dev/null
   python3 "$test_home/.config/mrcall-ai-kit/doc-compat.py" --help > /dev/null
@@ -87,6 +88,8 @@ for mode in copy symlink; do
   test ! -L "$checker"
   test ! -e "$keywords"
   test ! -L "$keywords"
+  test ! -e "$test_home/.config/mrcall-ai-kit/skill-path.py"
+  test ! -L "$test_home/.config/mrcall-ai-kit/skill-path.py"
   test ! -e "$test_home/.claude/commands/doc-create.md"
   test ! -e "$test_home/.agents/skills/doc-create"
   test ! -L "$test_home/.agents/skills/doc-create"
@@ -107,6 +110,7 @@ test ! -e "$non_doc_home/.config/mrcall-ai-kit/doc-check.py"
 test ! -L "$non_doc_home/.config/mrcall-ai-kit/doc-check.py"
 test ! -e "$non_doc_home/.config/mrcall-ai-kit/doc-keywords.py"
 test ! -L "$non_doc_home/.config/mrcall-ai-kit/doc-keywords.py"
+test ! -e "$non_doc_home/.config/mrcall-ai-kit/skill-path.py"
 echo "managed template excluded without doc-harness: PASS"
 
 # A missing required source must stop during plan construction. In particular,
@@ -119,6 +123,7 @@ cp "$KIT_DIR/shared/scripts/doc-evidence.py" "$missing_kit/shared/scripts/doc-ev
 cp "$KIT_DIR/shared/scripts/doc-keywords.py" "$missing_kit/shared/scripts/doc-keywords.py"
 cp "$KIT_DIR/shared/scripts/doc-compat.py" "$missing_kit/shared/scripts/doc-compat.py"
 cp "$KIT_DIR/shared/scripts/doc-migrate.py" "$missing_kit/shared/scripts/doc-migrate.py"
+cp "$KIT_DIR/shared/scripts/skill-path.py" "$missing_kit/shared/scripts/skill-path.py"
 missing_home="$TEST_ROOT/missing-home"
 mkdir -p "$missing_home"
 if output="$(HOME="$missing_home" "$missing_kit/install.sh" \

@@ -19,6 +19,14 @@ It cannot force a client to invoke the lifecycle or authenticate an agent's
 judgment.
 
 The operator's installed commands, skills and checker run v9.
+
+Kit sources resolve filesystem skills from catalog declarations, with only
+required, present local overrides. Nine CLI/install cases cover source selection,
+CS symlinks and template delivery; model obedience remains unverified. The new
+helper has not been installed in the operator environment. Updated symlinked
+instruction assets may already be visible; installation limits belong in the
+harness contract.
+
 The meta-repository, Desktop, kernel and support clone now have v9 profiles;
 other downstream repositories still declare v8, v3 or no profile. Each target's
 profile and current startup output determine its own prerequisite. The ancestor

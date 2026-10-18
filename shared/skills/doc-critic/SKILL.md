@@ -6,7 +6,10 @@ description: Verify documentation against code reality, and check whether docs/a
 # doc-critic — does the documentation match the code, and is active-context.md still a snapshot?
 
 This `SKILL.md` is the complete workflow. There is no sibling `WORKFLOW.md`;
-load this file once, preferring the repository-local skill when present.
+load this file once from its catalog-declared path. Use a repository-local
+override only when required by repository instructions and that entry exists;
+otherwise retain the declared installed source. Other skills' paths do not
+determine this skill's location. Report a missing declared source explicitly.
 
 The mechanical gate (`doc-check.py`) catches dead links, inventory drift,
 duplicate indexes, and malformed scope declarations. It CANNOT catch *semantic*

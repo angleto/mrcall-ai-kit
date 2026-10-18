@@ -8,6 +8,14 @@ Release, after an optional first line naming the commit.
 
 ## Unreleased
 
+- Resolve filesystem skills from their declared catalog paths; repository-local
+  harness overrides require an individual present entry. An unrelated CS-workflow
+  symlink no longer implies a local documentation skill.
+- Install read-only `skill-path.py` with every managed-template delivery route.
+  Missing or unreadable sources produce a nonzero diagnostic without partial
+  content. Nine deterministic CLI/install cases cover fallback, local precedence,
+  source refusal, ownership and uninstall; model compliance remains unverified.
+
 ## v9.3.0 — 2026-10-18
 
 - Fresh Codex leads and generated kit agents check whether the whole authorized

@@ -31,12 +31,38 @@ validation is separate from layout migration, and measured conditions are in
 Codex discovers user skills under `~/.agents/skills` and physical custom-role
 profiles under `~/.codex/agents`; deprecated custom prompts are not part of this
 design. A repository may vendor its own doc-start, doc-end, and doc-critic under
-`.agents/skills/`; the managed block directs agents to load those copies instead
-of same-named global workflows. The installer never creates repository-local
-copies. Its installed global instruction block routes leads to the repository's
+`.agents/skills/`; the managed block prefers each individual entry only when
+present. An absent entry falls back to the exact installed source declared in
+the current session's skill catalog, after expanding that catalog's root aliases.
+Another skill's directory, or a CS-workflow symlink, establishes no harness entry.
+The installer never creates repository-local copies. Its installed global
+instruction block routes leads to the repository's
 managed AGENTS entry and installed roles. Other content in the global file is
 operator-owned. OpenCode-only orchestration and watchdog behavior remain
 outside this cross-client documentation contract.
+
+Filesystem skill selection uses the installed read-only `skill-path.py`:
+
+```bash
+python3 "${MRCALL_KIT_HOME:-$HOME/.config/mrcall-ai-kit}/skill-path.py" --declared "$declared_skill"
+```
+
+Set `declared_skill` from the actual catalog. Pass `--local "$local_entry"` only
+when repository instructions require that override. A present local entry wins;
+an absent one uses the declared source. Invalid present overrides and missing or
+unreadable selected sources fail with a diagnostic and empty stdout. Default
+output is the absolute selected path; `--read` emits its complete bytes. Support
+files belong beside the selected entry. Resolve every batch input before reading;
+partial output with a failed exit does not establish a complete read. Do not guess
+other namespaces, copy global skills into repositories or suppress failures.
+
+The helper ships wherever doc-harness or verification-warnings ships the managed
+template. Existing copies need an explicit install refresh; symlinked instruction
+assets may expose updated prose before a new helper is installed. A missing
+helper is an installation diagnostic, not permission to invent paths. Nine actual
+CLI tests cover source selection, the CS symlink failure, both installation modes,
+warnings-only/combined delivery, ownership and uninstall. They do not prove that
+a model always follows these instructions or establish operational clone behavior.
 
 ## Request scope and delivery
 

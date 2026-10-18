@@ -10,6 +10,12 @@ brief, fresh reviewer, plan, fresh reviewer, reviewed milestones, documentation
 closure, then separate final review before baseline advancement. Release needs
 separate task authorization. Never load a legacy `CLAUDE.md` as the v9 protocol.
 
+Load skills from the exact current catalog source, expanding its declared root
+aliases. Apply a repository-required local override only when that individual
+entry exists; otherwise retain the declared installed source. Never infer a
+skill path from another skill's directory. Resolve and validate each source
+before batching reads; report a missing declared source instead of guessing.
+
 The kit installs Codex custom agents `reviewer`, `verify`, `execute`, and
 `plan` in `~/.codex/agents/`. As lead, for a lifecycle gate, spawn `reviewer` by name
 and give it the artifact, gate kind, and approved brief or plan as applicable.
