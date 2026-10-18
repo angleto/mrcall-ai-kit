@@ -1,5 +1,5 @@
 ---
-doc_baseline_commit: f163256622fbdb50acaf51c4b90ebe6af5511db0
+doc_baseline_commit: c5d4949b2370557746ae2046cbe41c1ae98e210f
 doc_baseline_date: 2026-10-18
 ---
 
@@ -22,10 +22,10 @@ The operator's installed commands, skills and checker run v9.
 
 Kit sources resolve filesystem skills from catalog declarations, with only
 required, present local overrides. Nine CLI/install cases cover source selection,
-CS symlinks and template delivery; model obedience remains unverified. The new
-helper has not been installed in the operator environment. Updated symlinked
-instruction assets may already be visible; installation limits belong in the
-harness contract.
+CS symlinks and template delivery; model obedience remains unverified. The
+installed helper matches the source and resolves the declared doc-start entry;
+complete client instruction refresh remains unverified. Source-linked instruction
+assets follow the checkout; installation limits belong in the harness contract.
 
 The meta-repository, Desktop, kernel and support clone now have v9 profiles;
 other downstream repositories still declare v8, v3 or no profile. Each target's
