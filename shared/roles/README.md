@@ -97,8 +97,8 @@ the session model; `/ai-budget` does not switch them.
 The generator also composes Codex's global kit block from `codex-lead.template.md`
 and `block-mandate-completion.md`; `--check` covers that output. Its installed
 `~/.codex/AGENTS.md` entry gives fresh Codex leads the decision independently of
-repository orientation. The canonical v9 repository block is unchanged. Ordinary
-Claude leads receive no new global instruction through this route; their kit
+repository orientation. Ordinary Claude leads receive no new global instruction
+through this route; their kit
 workers receive the decision through `kit-role-rules`. See
 [delivery and measured limits](../../docs/reread-guard.md#mandate-completion).
 
