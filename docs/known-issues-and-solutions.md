@@ -141,8 +141,8 @@ change, under bash 5.
 path any of whose components is a symlink, and the warnings' unregistration
 resolves its state under `HOME`.
 
-**Effect on the suite** (measured 2026-10-19, identical at `v9.3.1` and after
-the bash 3.2 change): on macOS `tests/test_verification_warnings_delivery.py`
+**Effect on the suite** (measured 2026-10-19, identical at `v9.3.1` with bash 5
+first on `PATH` and after the bash 3.2 change with either bash): on macOS `tests/test_verification_warnings_delivery.py`
 fails 4 cases on this refusal, and `tests/test_skill_path.py` fails 1 case and
 errors in 4 (its uninstall exits 1; one comparison sees `/var/...` against
 `/private/var/...`). Both build their `HOME` with Python's temporary directory.

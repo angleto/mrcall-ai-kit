@@ -17,8 +17,8 @@ One owner, one milestone; depends on nothing in flight. Files: `install.sh`, `un
 - `install.sh` 686 and 827: `${WARNING_RUNTIMES[@]+"${WARNING_RUNTIMES[@]}"}`, the expansion bash 3.2 accepts
   for an empty array under `set -u`, identical to `"${WARNING_RUNTIMES[@]}"` when it is not empty.
 - `uninstall.sh`: `order`, `MODE_AT`, `SRC_AT`, `BAK_AT`, `HASH_AT` indexed by position; `index_of <dest>`
-  prints the position of a destination and fails when it is absent (a linear scan: the manifest holds a few
-  hundred unique destinations). The read loop updates the existing position (last line wins) or appends.
+  prints the position of a destination and fails when it is absent (a linear scan: a full install records 108
+  unique destinations). The read loop updates the existing position (last line wins) or appends.
   `has_backup`, `owned_item`, `stays_occupied` look the destination up; the three registration guards use
   `index_of` where they used `[[ -v SRC_OF[...] ]]`. Every message and decision stays as it is.
 - `tests/test_bash32_scripts.sh`: the bash under test is `/bin/bash` when it exists (3.2 on macOS), else the
@@ -47,7 +47,7 @@ One owner, one milestone; depends on nothing in flight. Files: `install.sh`, `un
       (the temporary `HOME` path normalised): acceptance 2 and 3.
 - [x] `tests/test_bash32_scripts.sh` passes; the existing installer tests pass (acceptance 4).
 - [x] A mutation check: with one expansion reverted, the new test fails under `/bin/bash`.
-- [ ] README Requirements, CHANGELOG `Unreleased`, active-context.
+- [x] README Requirements, CHANGELOG `Unreleased`, active-context.
 
 ## Verification
 
@@ -78,7 +78,7 @@ Revert the commit; no data, no installed state of any machine is touched by the 
 - Existing shell tests, all 19, with `/opt/homebrew/bin` first on `PATH` and with `/bin` first (where
   `env bash` is 3.2.57): 38 of 38 exit 0. The Python tests that run the installers: `test_skill_path.py`
   (1 failure, 4 errors) and `test_verification_warnings_delivery.py` (4 failures) fail the same way on
-  `HEAD` exported with `git archive`, under both bashes (under 3.2 `HEAD` has 2 more errors, its
-  uninstaller not parsing); every one is the symlinked-`HOME` refusal recorded in
-  `docs/known-issues-and-solutions.md`.
+  `HEAD` exported with `git archive`, under both bashes. Those 9 come from the symlinked temporary `HOME` recorded in
+  `docs/known-issues-and-solutions.md`. Under 3.2 `HEAD` has 2 more errors, the bug this change fixes:
+  `install.sh:686` in `test_installed_copy_and_symlink_catalog_entries`, copy and symlink.
 
